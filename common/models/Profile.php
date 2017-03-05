@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\Photo;
 
 /**
  * This is the model class for table "profile".
@@ -96,5 +97,9 @@ class Profile extends \yii\db\ActiveRecord
             'relationships' => Yii::t('app', 'Relationships'),
             'religion' => Yii::t('app', 'Religion'),
         ];
+    }
+
+    public function getPhoto(){
+        return $this->hasMany(Photo::className(),['user_id'=>'user_id']);
     }
 }

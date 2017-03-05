@@ -18,7 +18,6 @@ class UserController extends \yii\web\Controller
 			$search = [];
 			$current_time_uts = time();
 			$query = '';
-
 			$i=0;
 	    	if(isset($_GET['SearchForm'])){
 				$model->gender = $_GET['SearchForm']['gender'];
@@ -60,11 +59,6 @@ class UserController extends \yii\web\Controller
 						$i++;
 					}
 				}
-						// echo "<pre>";
-						// echo "<hr>";
-						// // print_r($item);
-						// print_r($query);
-						// echo "</pre>";
 			}
 		    	$countries = Countries::find()->all();
 		    	$countries_array = ArrayHelper::map($countries, 'id','name');
@@ -72,22 +66,15 @@ class UserController extends \yii\web\Controller
 		    	$pag_query = Profile::find()->where($query);
 		    	$pag_count = $pag_query->count();
 		    	$pagination = new Pagination(['totalCount'=>$pag_count]);
-		    	// $search = Profile::find()->where($query)->offset($pagination->offset)->limit($pagination->limit)->all();
-		    	$pagination->defaultPageSize = 5;
+		    	$pagination->defaultPageSize = 24;
 		    	$pag_groups =$pag_query->offset($pagination->offset)
 		    						->limit($pagination->limit)
                                     ->all();
-		    	// echo "<pre>";
-		    	// print_r($pagination);
-		    	// echo "</pre>";
         return $this->render('search',[
         		'model'=> $model,
         		'countries' => $countries_array,
-        		// 'search' => $search,
-        		// 'query' => $query,
         		'pagination'=> $pagination,
         		'pag_groups' => $pag_groups
-        		// 'search_count' => $search_count
         	]);
     }
 }

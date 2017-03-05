@@ -14,10 +14,16 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="profile-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<?php if ($model->user_id==Yii::$app->user->getId()){
+	?>
+    <h1>Update my Profile</h1>
 
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
+	<?php
+	} else{
+		echo "<h1>You can`t update  profile of anotger person!</h1>";
+	}
+ ?>
 </div>

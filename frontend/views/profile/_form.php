@@ -12,9 +12,11 @@ use kartik\widgets\datepicker;
 
 <div class="profile-form">
 
+
+
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <!-- <?= $form->field($model, 'user_id')->textInput() ?> -->
 
     <?= $form->field($model, 'firstname')->textInput(['maxlength' => true]) ?>
 
@@ -23,12 +25,15 @@ use kartik\widgets\datepicker;
     <?php
         echo 'Birth Date';
         echo DatePicker::widget([
-            'name' => 'dp_1',
-            'type' => DatePicker::TYPE_INPUT,
-            'value' => '23-Feb-1982',
-            'pluginOptions' => [
-                'autoclose'=>true,
-                'format' => 'dd-M-yyyy'
+                'model' => $model,
+                'attribute' => 'birthdate',
+                'type' => DatePicker::TYPE_INPUT,
+                 'pluginOptions' => [
+                    'autoclose'=>true,
+                    'format' => 'dd-M-yyyy'
+            ],
+            'options'=>[
+                'value' => date('d-m-Y',$model->birthdate),
             ]
         ]);
         ?>
@@ -57,7 +62,10 @@ use kartik\widgets\datepicker;
 
     <?= $form->field($model, 'education')->dropDownlist(Yii::$app->params['education'])?>
 
-    <?= $form->field($model, 'languages')->dropDownlist(Yii::$app->params['languages'],['multiple'=>'multiple'])?>
+    <?= $form->field($model, 'languages')->dropDownlist(Yii::$app->params['languages']
+    // ,['multiple'=>'multiple']
+        )
+    ?>
 
     <?= $form->field($model, 'has_children')->dropDownlist(Yii::$app->params['has_children']) ?>
 
@@ -80,5 +88,6 @@ use kartik\widgets\datepicker;
     </div>
 
     <?php ActiveForm::end(); ?>
+
 
 </div>

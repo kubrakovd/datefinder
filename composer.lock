@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0528967220ff4418babaacaab484c8a",
+    "content-hash": "5024052c12bb321c59e3a091c0226bc5",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -353,16 +353,16 @@
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
-            "version": "v4.0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-star-rating.git",
-                "reference": "d66083c14f9386ede23fccb76dea1a380db67ded"
+                "reference": "0dc6dd50606e2c09360106c538f1a172b114d93c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/d66083c14f9386ede23fccb76dea1a380db67ded",
-                "reference": "d66083c14f9386ede23fccb76dea1a380db67ded",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/0dc6dd50606e2c09360106c538f1a172b114d93c",
+                "reference": "0dc6dd50606e2c09360106c538f1a172b114d93c",
                 "shasum": ""
             },
             "type": "library",
@@ -393,7 +393,7 @@
                 "star",
                 "svg"
             ],
-            "time": "2016-02-28T16:13:18+00:00"
+            "time": "2017-02-21 19:18:33"
         },
         {
             "name": "kartik-v/dependent-dropdown",
@@ -1467,6 +1467,46 @@
                 "yii2"
             ],
             "time": "2014-11-09T19:54:17+00:00"
+        },
+        {
+            "name": "persianyii/yii2-image",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/seifzadeh/yii2-image.git",
+                "reference": "c64103ec09ec90bb59c8536599ef924b655b6b78"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/seifzadeh/yii2-image/zipball/c64103ec09ec90bb59c8536599ef924b655b6b78",
+                "reference": "c64103ec09ec90bb59c8536599ef924b655b6b78",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "persianyii\\image\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Mehrdad Seifzadeh",
+                    "email": "mehrdad.seifzadeh@gmail.com"
+                }
+            ],
+            "description": "yii framework 2 image resize",
+            "keywords": [
+                "extension",
+                "yii2"
+            ],
+            "time": "2015-10-16T20:36:42+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4119,7 +4159,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "persianyii/yii2-image": 20,
+        "kartik-v/bootstrap-star-rating": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

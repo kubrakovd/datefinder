@@ -1,8 +1,14 @@
 <?php
 namespace frontend\models;
 
+use Yii;
 use yii\base\Model;
 use common\models\User;
+use common\models\Photo;
+use frontend\controllers\PhotoController;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use persianyii\image\Resize;
 
 /**
  * Signup form
@@ -31,10 +37,12 @@ class SignupForm extends Model
     public $has_children;
     public $smoking;
     public $alcohol;
+    public $orientation;
     public $habitation;
     public $interests;
     public $relationships;
     public $religion;
+    public $photo;
 
 
     /**
@@ -47,9 +55,10 @@ class SignupForm extends Model
             ['username', 'required'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
-            [['firstname','lastname','birthdate','country_id','region_id','city_id','want_find','height','weight',],'required'],
-            [['phone','purpose','appearance','interests'],'string'],
-            [['gender','education','body','languages','has_children','smoking','alcohol','habitation','relationships','religion'],'integer'],
+            [['firstname','lastname','birthdate','country_id','region_id','city_id','gender','want_find','phone','purpose','height','weight','body','appearance','education','languages','has_children','smoking','alcohol','habitation','orientation','relationships','interests','religion',
+            'photo'
+            ],'required'],
+
 
 
             ['email', 'trim'],
@@ -70,6 +79,11 @@ class SignupForm extends Model
      */
     public function signup()
     {
+        echo "<pre>";
+        // print_r($_FILES);
+        // print_r($_POST);
+        // var_dump($_POST);
+        echo "</pre>";
         if (!$this->validate()) {
             return null;
         }
@@ -80,12 +94,13 @@ class SignupForm extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->save();
+        // return $user;
 
         $profile = new Profile();
         $profile->user_id = $user->id;
         $profile->firstname = $this->firstname;
         $profile->lastname = $this->lastname;
-        $profile->birthdate = $this->birthdate;
+        $profile->birthdate = strtotime($this->birthdate);
         $profile->country_id = $this->country_id;
         $profile->region_id = $this->region_id;
         $profile->city_id = $this->city_id;
@@ -102,6 +117,7 @@ class SignupForm extends Model
         $profile->has_children = $this->has_children;
         $profile->smoking = $this->smoking;
         $profile->alcohol = $this->alcohol;
+        $profile->orientation = $this->orientation;
         $profile->habitation = $this->habitation;
         $profile->interests = $this->interests;
         $profile->relationships = $this->relationships;
@@ -109,10 +125,67 @@ class SignupForm extends Model
 
         $profile->save();
 
-        if($profile->save(false)){
+
+        if(!empty($_FILES)){
+            $photo_array = $_FILES['SignupForm']['type']['photo'];
+            $i = 0;
+            foreach ($photo_array as $photo_item) {
+                switch ($photo_item) {
+                    case 'image/jpeg':
+                        $ext = 'jpg';
+                        break;
+                    case 'image/jpg':
+                        $ext = 'jpg';
+                        break;
+                    case 'image/png':
+                        $ext = 'png';
+                        break;
+                    case 'image/gif':
+                        $ext = 'gif';
+                        break;
+                }
+            $photoname = md5($photo_item.time()). '.' . $ext;
+            $photo_temp = $_FILES['SignupForm']['tmp_name']['photo'];
+            $photo = new Photo();
+            switch ($i) {
+                case '0':
+                    $save = move_uploaded_file($photo_temp[0], $_SERVER['DOCUMENT_ROOT']. '/datefinder/frontend/web/uploads/photo/'.$photoname);
+                break;
+                case '1':
+                      $save = move_uploaded_file($photo_temp[1], $_SERVER['DOCUMENT_ROOT']. '/datefinder/frontend/web/uploads/photo/'.$photoname);
+                break;
+                case '2':
+                      $save = move_uploaded_file($photo_temp[2], $_SERVER['DOCUMENT_ROOT']. '/datefinder/frontend/web/uploads/photo/'.$photoname);
+                break;
+                case '3':
+                      $save = move_uploaded_file($photo_temp[3], $_SERVER['DOCUMENT_ROOT']. '/datefinder/frontend/web/uploads/photo/'.$photoname);
+                break;
+                case '4':
+                      $save = move_uploaded_file($photo_temp[4], $_SERVER['DOCUMENT_ROOT']. '/datefinder/frontend/web/uploads/photo/'.$photoname);
+                break;
+                case '5':
+                      $save = move_uploaded_file($photo_temp[5], $_SERVER['DOCUMENT_ROOT']. '/datefinder/frontend/web/uploads/photo/'.$photoname);
+                 break;
+            }
+            $resize = new Resize($_SERVER['DOCUMENT_ROOT']. '/datefinder/frontend/web/uploads/photo/'.$photoname);
+            $resize->resizeTo(500, 500);
+            $resize->saveImage($_SERVER['DOCUMENT_ROOT']. '/datefinder/frontend/web/uploads/photo/'.$photoname);
+
+            $photo->user_id = $user->id;
+            $photo->name = $photoname;
+            $photo->save();
+            $i++;
+
+            }
+        }
+        if($profile->save()
+            && $photo->save()
+            ){
             return $user;
         }else{
             $user->delete();
+            $profile->delete();
+            $photo->delete();
             return null;
         }
     }

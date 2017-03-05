@@ -6,10 +6,11 @@ use kartik\widgets\Typeahead;
 use kartik\depdrop\DepDrop;
 use yii\helpers\url;
 use yii\widgets\LinkPager;
+use common\models\Photo;
 ?>
 <h1 class="text-center"><?=Yii::t('app', 'Search person by parameters') ?></h1>
 
-<div class="panel">
+<div class="panel search">
     <div class="panel-body">
     	<?php
     	$form = ActiveForm::begin([
@@ -94,17 +95,39 @@ use yii\widgets\LinkPager;
     <?php
     	if (isset($_GET['SearchForm'])) {
     	if (count($pag_groups)>0 ){
-    		foreach ($pag_groups as $item) {
-    	?>
+    	echo '<div class="row">';
+            $i=0.5;
+            foreach ($pag_groups as $item) {
+                if($i%6!=0) {
+        ?>
 
-    	<div class="panel panel-default">
-    		<div class="panel-body">
+            <div class="col-sm-2">
+                        <?php
+                        // echo "<pre>";
+                        // print_r($i);
+                        // echo "</pre>";
+                         ?>
+                        <?=Html::a(Html::img('../../uploads/photo/'.$item->photo[0]['name'],['width'=>'130','height'=>'150','class'=>'ba-photo']), ['profile/view', 'id'=>$item->user_id])?>
+            </div>
+            <!-- /.col-md-2 -->
 
-    			<?=Html::a($item->firstname.' '.$item->lastname, ['profile/view', 'id'=>$item->user_id])?>
-    		</div>
-    	</div>
-		<?php
-		}
+        <?php
+            $i++;
+                }else{
+                ?>
+                    </div>
+                    <!-- // /.row -->
+                    <div class="row">
+                       <div class="col-sm-2">
+                        <?=Html::a(Html::img('../../uploads/photo/'.$item->photo[0]['name'],['width'=>'130','height'=>'150','class'=>'ba-photo']), ['profile/view', 'id'=>$item->user_id])?>
+                    </div>
+                    <!-- /.col-md-2 -->
+            <?php
+                $i++;
+                }
+        }
+        echo '</div>';
+        // <!-- /.row -->
     	}else{
     	?>
 	    	<div class="alert alert-info">

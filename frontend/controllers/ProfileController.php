@@ -60,6 +60,7 @@ class ProfileController extends Controller
         $city = Cities::findOne($model->city_id);
 
 
+
         return $this->render('view', [
             'model' => $model,
             'country' => $country,

@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use frontend\models\Photo;
 
 
 /**
@@ -44,10 +45,11 @@ class Profile extends \yii\db\ActiveRecord
         return 'profile';
     }
 
-     public function beforeSave($insert){
-        $this->birthdate = strtotime($this->birthdate);
-        return parent::beforeSave($insert);
-    }
+    //  public function beforeSave($insert){
+    //     $this->birthdate = strtotime($this->birthdate);
+    //     // $this->languages = json_encode($this->languages);
+    //     return parent::beforeSave($insert);
+    // }
 
     /**
      * @inheritdoc
@@ -55,10 +57,9 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'firstname', 'lastname', 'birthdate', 'country_id', 'region_id', 'city_id', 'gender', 'want_find', 'phone', 'purpose', 'height', 'weight', 'body', 'appearance', 'education', 'languages', 'has_children', 'orientation', 'smoking', 'alcohol', 'habitation', 'interests', 'relationships', 'religion'], 'required'],
-            // [['user_id', 'gender', 'body', 'appearance', 'education',  'has_children', 'orientation', 'smoking', 'alcohol', 'habitation', 'relationships', 'religion'], 'integer'],
+            [[ 'firstname', 'lastname','birthdate', 'country_id', 'region_id', 'city_id','gender','want_find','phone','purpose','height','weight','body','appearance','education','languages','has_children','smoking','alcohol','habitation','orientation','relationships','interests','religion'], 'required'],
             [['firstname', 'lastname'], 'string', 'max' => 50],
-            [['birthdate'], 'string', 'max' => 12],
+            // [['birthdate'], 'string', 'max' => 20],
             [['want_find', 'purpose', 'interests'], 'string', 'max' => 250],
             [['phone'], 'string', 'max' => 25],
             [['height', 'weight'], 'string', 'max' => 3],
@@ -97,5 +98,9 @@ class Profile extends \yii\db\ActiveRecord
             'relationships' => Yii::t('app', 'Relationships'),
             'religion' => Yii::t('app', 'Religion'),
         ];
+    }
+
+    public function getPhoto(){
+        return $this->hasMany(Photo::classname(), 'user_id','user_id');
     }
 }

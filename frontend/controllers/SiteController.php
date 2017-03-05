@@ -100,6 +100,8 @@ class SiteController extends Controller
         }
     }
 
+
+
     /**
      * Logs out the current user.
      *
@@ -150,6 +152,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
+
     public function actionSignup()
     {
 
@@ -157,6 +160,7 @@ class SiteController extends Controller
         $countries = Countries::find()->all();
         $countries_array = ArrayHelper::map($countries, 'id','name');
         if ($model->load(Yii::$app->request->post())) {
+            /////
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
