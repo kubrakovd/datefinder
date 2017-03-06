@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use frontend\models\Profile;
-use kartik\widgets\datepicker;
+use kartik\widgets\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Profile */

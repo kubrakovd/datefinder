@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use kartik\widgets\Typeahead;
 use kartik\depdrop\DepDrop;
-use yii\helpers\url;
+use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use common\models\Photo;
 ?>

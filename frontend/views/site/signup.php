@@ -7,9 +7,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\depdrop\DepDrop;
-use yii\helpers\url;
+use yii\helpers\Url;
 use kartik\widgets\FileInput;
-use kartik\widgets\datepicker;
+use kartik\widgets\DatePicker;
 
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
@@ -91,16 +91,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?= $form->field($model, 'languages')->dropDownlist(Yii::$app->params['languages'])  ?>
                             <?= $form->field($model, 'smoking')->dropDownlist(Yii::$app->params['smoking'])  ?>
                             <?= $form->field($model, 'alcohol')->dropDownlist(Yii::$app->params['alcohol'])  ?>
-                            <?= $form->field($model, 'habitation')->dropDownlist(Yii::$app->params['habitation'])  ?>
                             <?= $form->field($model, 'interests')->textInput(['value'=>'all']) ?>
                             <?= $form->field($model, 'relationships')->dropDownlist(Yii::$app->params['relationships']) ?>
                             <?= $form->field($model, 'religion')->dropDownlist(Yii::$app->params['religion']) ?>
                            <?= $form->field($model, 'has_children')->dropDownlist(Yii::$app->params['has_children'])  ?>
                             <?= $form->field($model, 'habitation')->dropDownlist(Yii::$app->params['habitation'])  ?>
+                            <?= $form->field($model, 'orientation')->dropDownlist(Yii::$app->params['orientation']) ?>
                         </div>
                         <!-- /.col-md-3 -->
                         <div class="col-md-3">
-                            <?= $form->field($model, 'orientation')->dropDownlist(Yii::$app->params['orientation']) ?>
                             <?php
                               echo $form->field($model, 'photo[]')->widget(FileInput::classname(), [
                                 'options' => [
